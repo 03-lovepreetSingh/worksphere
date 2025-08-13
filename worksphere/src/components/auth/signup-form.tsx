@@ -1,38 +1,55 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { AuthLayout } from "@/components/layout/auth-layout"
-import { Mail, Eye, EyeOff } from "lucide-react"
-import Link from "next/link"
+import { useState } from "react";
+import { signIn } from "next-auth/react"; // <-- Import NextAuth signIn
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { AuthLayout } from "@/components/layout/auth-layout";
+import { Mail, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 export function SignupForm() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <AuthLayout>
       <div className="text-center space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign Up Here to</h1>
-          <h2 className="text-3xl font-bold text-gray-900">create new account</h2>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Sign Up Here to
+          </h1>
+          <h2 className="text-3xl font-bold text-gray-900">
+            create new account
+          </h2>
         </div>
 
         <form className="space-y-4">
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <Input type="email" placeholder="Enter your email id" className="pl-10" />
+            <Input
+              type="email"
+              placeholder="Enter your email id"
+              className="pl-10"
+            />
           </div>
 
           <div className="relative">
-            <Input type={showPassword ? "text" : "password"} placeholder="Enter your password here" className="pr-10" />
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password here"
+              className="pr-10"
+            />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
             >
-              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              {showPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
             </button>
           </div>
 
@@ -47,18 +64,28 @@ export function SignupForm() {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
             >
-              {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              {showConfirmPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
             </button>
           </div>
 
-          <Button size="lg" className="w-full bg-black text-white hover:bg-gray-800">
+          <Button
+            size="lg"
+            className="w-full bg-black text-white hover:bg-gray-800"
+          >
             Create Account
           </Button>
         </form>
 
         <p className="text-gray-600">
           Already Have an Account?{" "}
-          <Link href="/auth/login" className="text-green-500 hover:text-green-600">
+          <Link
+            href="/auth/login"
+            className="text-green-500 hover:text-green-600"
+          >
             Login
           </Link>
         </p>
@@ -72,6 +99,7 @@ export function SignupForm() {
           </div>
         </div>
 
+        {/* Google Signup */}
         <Button variant="outline" size="lg" className="w-full bg-transparent">
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
             <path
@@ -94,6 +122,22 @@ export function SignupForm() {
           Sign Up with Google
         </Button>
 
+        {/* GitHub Signup */}
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full bg-transparent"
+          onClick={() => signIn("github")} // <-- OAuth trigger
+        >
+          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              fillRule="evenodd"
+              d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.41 7.86 10.94.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.76.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.13 11.13 0 0 1 5.82 0c2.22-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.27 5.68.42.37.8 1.1.8 2.22 0 1.6-.01 2.89-.01 3.28 0 .31.21.67.8.56A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5z"
+            />
+          </svg>
+          Sign Up with GitHub
+        </Button>
+
         <p className="text-sm text-gray-500">
           by Signing Up, i agree with WorkSphere{" "}
           <Link href="#" className="text-blue-500 underline">
@@ -107,5 +151,5 @@ export function SignupForm() {
         </p>
       </div>
     </AuthLayout>
-  )
+  );
 }

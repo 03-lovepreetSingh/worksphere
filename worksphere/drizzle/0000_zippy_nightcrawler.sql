@@ -1,0 +1,22 @@
+CREATE TABLE "users" (
+	"id" varchar(36) PRIMARY KEY NOT NULL,
+	"full_name" varchar(150) NOT NULL,
+	"email" varchar(256) NOT NULL,
+	"password_hash" varchar(256) NOT NULL,
+	"profile_image" varchar(512),
+	"bio" text,
+	"location" varchar(100),
+	"skills" json,
+	"hourly_rate" numeric(10, 2),
+	"rating" numeric(2, 1) DEFAULT '5.0',
+	"completed_projects" integer DEFAULT 0,
+	"linkedin" varchar(256),
+	"twitter" varchar(256),
+	"github" varchar(256),
+	"wallet_address" varchar(256),
+	"is_verified" boolean DEFAULT false,
+	"terms_accepted" boolean DEFAULT false,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now(),
+	CONSTRAINT "users_email_unique" UNIQUE("email")
+);
